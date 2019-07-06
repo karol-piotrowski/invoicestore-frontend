@@ -2,6 +2,7 @@ package com.kodilla.invoicestorefrontend;
 
 import com.kodilla.invoicestorefrontend.domain.User;
 import com.kodilla.invoicestorefrontend.service.UserService;
+import com.kodilla.invoicestorefrontend.session.SessionVariables;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
@@ -13,7 +14,7 @@ import com.vaadin.flow.router.Route;
 
 @Route
 public class MainView extends VerticalLayout {
-
+    private SessionVariables sessionVariables = SessionVariables.getInstance();
     private UserService userService = UserService.getInstance();
     private Grid<User> grid = new Grid<>(User.class);
     private TextField filter = new TextField();

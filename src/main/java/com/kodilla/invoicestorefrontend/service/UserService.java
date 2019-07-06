@@ -1,6 +1,6 @@
 package com.kodilla.invoicestorefrontend.service;
 
-import client.UserClient;
+import com.kodilla.invoicestorefrontend.client.UserClient;
 import com.kodilla.invoicestorefrontend.domain.User;
 
 import java.util.HashSet;

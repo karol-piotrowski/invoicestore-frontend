@@ -1,7 +1,7 @@
-package client;
+package com.kodilla.invoicestorefrontend.client;
 
 import com.kodilla.invoicestorefrontend.domain.User;
-import config.BackendConfig;
+import com.kodilla.invoicestorefrontend.config.BackendConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestClientException;

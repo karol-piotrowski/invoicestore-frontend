@@ -1,4 +1,4 @@
-package config;
+package com.kodilla.invoicestorefrontend.config;
 
 public class BackendConfig {
     private static BackendConfig backendConfig;

@@ -2,6 +2,7 @@ package com.kodilla.invoicestorefrontend;
 
 import com.kodilla.invoicestorefrontend.domain.User;
 import com.kodilla.invoicestorefrontend.service.UserService;
+import com.kodilla.invoicestorefrontend.session.SessionVariables;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -10,6 +11,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 
 public class UserForm extends VerticalLayout {
+    private SessionVariables sessionVariables = SessionVariables.getInstance();
     private TextField login = new TextField("Login");
     private TextField taxId = new TextField("Tax ID");
     private TextField firstname = new TextField("First name");
@@ -40,6 +42,8 @@ public class UserForm extends VerticalLayout {
 
     private void edit() {
         User user = binder.getBean();
+        sessionVariables.setCurrentUser(user);
+        edit.getUI().ifPresent(ui -> ui.navigate("edituser"));
     }
 
     private void viewInvoices() {
