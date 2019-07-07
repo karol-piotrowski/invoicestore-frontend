@@ -33,8 +33,8 @@ public class MainView extends VerticalLayout {
 
         addNewUser.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         addNewUser.addClickListener(e -> {
-            grid.asSingleSelect().clear();
-            form.setUser(new User());
+            sessionVariables.setCurrentUser(new User());
+            addNewUser.getUI().ifPresent(ui -> ui.navigate("edituser"));
         });
 
         HorizontalLayout toolbar = new HorizontalLayout(filter, addNewUser, accountants, companies);

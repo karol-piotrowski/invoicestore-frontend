@@ -77,4 +77,13 @@ public class EmailConfigClient {
         restTemplate.put(url, emailConfig);
     }
 
+    public void deleteEmailConfig(Long emailConfigId) {
+        URI url = UriComponentsBuilder.fromHttpUrl(backendConfig.getBackendApiEndPoint() + "emailconfigs/" + emailConfigId)
+                .build().encode().toUri();
+        try {
+            restTemplate.delete(url);
+        } catch (RestClientException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+    }
 }

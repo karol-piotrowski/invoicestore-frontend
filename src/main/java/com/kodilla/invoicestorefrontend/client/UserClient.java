@@ -64,4 +64,24 @@ public class UserClient {
             return new User();
         }
     }
+
+    public void deleteUser(Long userId) {
+        URI url = UriComponentsBuilder.fromHttpUrl(backendConfig.getBackendApiEndPoint() + "users/" + userId)
+                .build().encode().toUri();
+        try {
+            restTemplate.delete(url);
+        } catch (RestClientException e){
+            LOGGER.error(e.getMessage(), e);
+        }
+    }
+
+    public User createNewUser(User user) {
+        URI url = getUrl();
+        return restTemplate.postForObject(url, user, User.class);
+    }
+
+    public void updateUser(User user) {
+        URI url = getUrl();
+        restTemplate.put(url, user);
+    }
 }

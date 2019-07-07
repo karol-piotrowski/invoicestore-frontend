@@ -5,7 +5,6 @@ import com.kodilla.invoicestorefrontend.service.UserService;
 import com.kodilla.invoicestorefrontend.session.SessionVariables;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
@@ -20,7 +19,6 @@ public class UserForm extends VerticalLayout {
     private UserService service = UserService.getInstance();
     private Button viewInvoices = new Button("View Invoices");
     private Button edit = new Button("Edit");
-    private Button delete = new Button("Delete");
     private MainView mainView;
 
     public UserForm(MainView mv) {
@@ -30,14 +28,12 @@ public class UserForm extends VerticalLayout {
         firstname.setEnabled(false);
         lastname.setEnabled(false);
 
-        HorizontalLayout editAndDeleteButtons = new HorizontalLayout(edit, delete);
         viewInvoices.addThemeVariants(ButtonVariant.LUMO_LARGE);
         viewInvoices.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        add(login, taxId, firstname, lastname, viewInvoices, editAndDeleteButtons);
+        add(login, taxId, firstname, lastname, viewInvoices, edit);
         binder.bindInstanceFields(this);
         viewInvoices.addClickListener(event -> viewInvoices());
         edit.addClickListener(event -> edit());
-        delete.addClickListener(event -> delete());
     }
 
     private void edit() {
@@ -53,13 +49,6 @@ public class UserForm extends VerticalLayout {
     private void save() {
         User user = binder.getBean();
         service.saveUser(user);
-        mainView.refresh();
-        setUser(null);
-    }
-
-    private void delete() {
-        User user = binder.getBean();
-        service.deleteUser(user);
         mainView.refresh();
         setUser(null);
     }

@@ -42,4 +42,7 @@ public class EmailConfigService {
     }
 
 
+    public void deleteEmailConfig(Long id) {
+        emailConfigClient.deleteEmailConfig(id);
+    }
 }

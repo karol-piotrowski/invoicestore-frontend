@@ -50,6 +50,12 @@ public class EmailConfigForm extends FormLayout {
     }
 
     public void delete() {
+        EmailConfig emailConfig = binder.getBean();
+        emailConfigService.deleteEmailConfig(emailConfig.getEmailConfigId());
+        Long userId = sessionVariables.getCurrentUser().getUserId();
+        sessionVariables.setCurrentUser(userService.getUser(userId));
+        editUserView.refresh();
+        setEmailConfig(null);
     }
 
     public void save() {
@@ -69,8 +75,10 @@ public class EmailConfigForm extends FormLayout {
         }
         if(emailConfig == null) {
             setVisible(false);
+            editUserView.getSave().setVisible(true);
         } else {
             setVisible(true);
+            editUserView.getSave().setVisible(false);
         }
 
     }
