@@ -47,4 +47,7 @@ public class UserService {
                 user.getLastname().toLowerCase().contains(str.toLowerCase())).collect(Collectors.toSet());
     }
 
+    public User getUser(Long userId) {
+        return userClient.getUser(userId);
+    }
 }

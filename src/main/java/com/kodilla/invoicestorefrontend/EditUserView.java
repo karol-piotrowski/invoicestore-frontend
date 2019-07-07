@@ -59,15 +59,16 @@ public class EditUserView extends VerticalLayout {
 
     }
 
-    private void refresh() {
-        if(user.getEmailConfigId()==null){
+    public void refresh() {
+        user = sessionVariables.getCurrentUser();
+        if (user.getEmailConfigId() == null) {
             grid.setItems(new EmailConfig());
         } else {
             grid.setItems(emailConfigService.getEmailConfig(user.getEmailConfigId()));
         }
     }
 
-    private void users() {
+    public void users() {
         users.getUI().ifPresent(ui -> ui.navigate(""));
     }
 }

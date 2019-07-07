@@ -2,6 +2,7 @@ package com.kodilla.invoicestorefrontend.client;
 
 import com.kodilla.invoicestorefrontend.config.BackendConfig;
 import com.kodilla.invoicestorefrontend.domain.EmailConfig;
+import com.kodilla.invoicestorefrontend.session.SessionVariables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestClientException;
@@ -20,6 +21,7 @@ public class EmailConfigClient {
     private static EmailConfigClient emailConfigClient;
 
     private BackendConfig backendConfig = BackendConfig.getInstance();
+    private SessionVariables sessionVariables = SessionVariables.getInstance();
     private RestTemplate restTemplate = new RestTemplate();
 
     private EmailConfigClient() {
@@ -61,4 +63,18 @@ public class EmailConfigClient {
             return new EmailConfig();
         }
     }
+
+    public EmailConfig createNewEmailConfig(EmailConfig emailConfig) {
+        emailConfig.setUserId(sessionVariables.getCurrentUser().getUserId());
+        URI url = UriComponentsBuilder.fromHttpUrl(backendConfig.getBackendApiEndPoint()+ "emailconfigs/")
+                .build().encode().toUri();
+                return restTemplate.postForObject(url, emailConfig, EmailConfig.class);
+    }
+
+    public void updateEmailConfig(EmailConfig emailConfig) {
+        URI url = UriComponentsBuilder.fromHttpUrl(backendConfig.getBackendApiEndPoint()+ "emailconfigs/")
+                .build().encode().toUri();
+        restTemplate.put(url, emailConfig);
+    }
+
 }

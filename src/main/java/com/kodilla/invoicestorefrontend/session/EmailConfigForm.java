@@ -3,6 +3,9 @@ package com.kodilla.invoicestorefrontend.session;
 import com.kodilla.invoicestorefrontend.EditUserView;
 import com.kodilla.invoicestorefrontend.domain.EmailConfig;
 import com.kodilla.invoicestorefrontend.domain.EncryptionType;
+import com.kodilla.invoicestorefrontend.domain.User;
+import com.kodilla.invoicestorefrontend.service.EmailConfigService;
+import com.kodilla.invoicestorefrontend.service.UserService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -17,6 +20,8 @@ import com.vaadin.flow.data.binder.Binder;
 
 public class EmailConfigForm extends FormLayout {
     private SessionVariables sessionVariables = SessionVariables.getInstance();
+    private EmailConfigService emailConfigService = EmailConfigService.getInstance();
+    private UserService userService = UserService.getInstance();
     private EmailField emailAddress = new EmailField("Email address");
     private TextField smtpServer = new TextField("SMTP server");
     private NumberField smtpPort = new NumberField("SMTP port");
@@ -29,6 +34,7 @@ public class EmailConfigForm extends FormLayout {
     private Binder<EmailConfig> binder = new Binder<>(EmailConfig.class);
     private EditUserView editUserView;
 
+
     public EmailConfigForm(EditUserView ev) {
         editUserView = ev;
         encryptionType.setItems(EncryptionType.values());
@@ -36,21 +42,31 @@ public class EmailConfigForm extends FormLayout {
         HorizontalLayout buttons = new HorizontalLayout(save, delete);
         add(emailAddress, smtpServer, smtpPort, username, password, isAuthReq, encryptionType, buttons);
         binder.forField(smtpPort).withConverter(Double::intValue, Integer::doubleValue ).bind(EmailConfig::getSmtpPort, EmailConfig::setSmtpPort);
+        binder.forField(isAuthReq).bind(EmailConfig::isAuthReq, EmailConfig::setAuthReq);
         binder.bindInstanceFields(this);
         save.addClickListener(event -> save());
         delete.addClickListener(event -> delete());
 
     }
 
-    private void delete() {
+    public void delete() {
     }
 
-    private void save() {
+    public void save() {
+        EmailConfig emailConfig = binder.getBean();
+        emailConfigService.saveEmailConfig(emailConfig);
+        Long userId = sessionVariables.getCurrentUser().getUserId();
+        sessionVariables.setCurrentUser(userService.getUser(userId));
+        editUserView.refresh();
+        setEmailConfig(null);
     }
 
     public void setEmailConfig(EmailConfig emailConfig) {
-        binder.setBean(emailConfig);
+        try{
+            binder.setBean(emailConfig);
+        } catch (NullPointerException e) {
 
+        }
         if(emailConfig == null) {
             setVisible(false);
         } else {

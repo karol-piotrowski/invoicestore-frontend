@@ -27,7 +27,7 @@ public class UserClient {
     private UserClient() {
     }
 
-    public static UserClient getInstance(){
+    public static UserClient getInstance() {
         if (userClient == null) {
             userClient = new UserClient();
         }
@@ -52,5 +52,16 @@ public class UserClient {
         return url;
 
 
+    }
+
+    public User getUser(Long userId) {
+        URI url = UriComponentsBuilder.fromHttpUrl(backendConfig.getBackendApiEndPoint() + "users/" + userId)
+                .build().encode().toUri();
+        try {
+            return restTemplate.getForObject(url, User.class);
+        } catch (RestClientException e) {
+            LOGGER.error(e.getMessage(), e);
+            return new User();
+        }
     }
 }
