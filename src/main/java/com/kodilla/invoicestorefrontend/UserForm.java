@@ -30,10 +30,10 @@ public class UserForm extends VerticalLayout {
         firstname.setEnabled(false);
         lastname.setEnabled(false);
 
-        HorizontalLayout saveAndDeleteButtons = new HorizontalLayout(edit, delete);
+        HorizontalLayout editAndDeleteButtons = new HorizontalLayout(edit, delete);
         viewInvoices.addThemeVariants(ButtonVariant.LUMO_LARGE);
         viewInvoices.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        add(login, taxId, firstname, lastname, viewInvoices, saveAndDeleteButtons);
+        add(login, taxId, firstname, lastname, viewInvoices, editAndDeleteButtons);
         binder.bindInstanceFields(this);
         viewInvoices.addClickListener(event -> viewInvoices());
         edit.addClickListener(event -> edit());

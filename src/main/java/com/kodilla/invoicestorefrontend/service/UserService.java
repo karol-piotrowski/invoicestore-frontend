@@ -25,7 +25,8 @@ public class UserService {
     }
 
     public Set<User> getUsers() {
-        return userClient.getUsers();
+        users = userClient.getUsers();
+        return users;
     }
 
     public void addUser(User user) {

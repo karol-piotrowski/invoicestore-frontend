@@ -24,7 +24,7 @@ public class UserClient {
     private RestTemplate restTemplate = new RestTemplate();
 
 
-    public UserClient() {
+    private UserClient() {
     }
 
     public static UserClient getInstance(){
